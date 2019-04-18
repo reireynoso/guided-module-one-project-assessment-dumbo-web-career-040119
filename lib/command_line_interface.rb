@@ -5,14 +5,17 @@ class CommandLineInterface
             menu.choice 'SignUp' 
             menu.choice 'Login'
             menu.choice 'Change Course Name'
+            menu.choice 'Exit'
         end
 
         if welcome == 'Login'
             login_menu
         elsif welcome == 'SignUp'
             sign_in
-        else 
+        elsif welcome == 'Change Course Name'
             update_course_name
+        else
+            puts "Goodbye"
         end
     end
 
@@ -30,19 +33,30 @@ class CommandLineInterface
         # input2 = gets.chomp
         # puts "Which course do you want to change?"
         # cls = gets.chomp
-    
+        
+        #checks Teacher class for instances of teacher instance
         match = Teacher.all.find do |teacher|
             teacher.first_name == first_name && teacher.last_name == last_name
         end
         if match == nil
             puts "You're Not a Teacher in our DataBase"
-            sleep 2
+            sleep 1
             run
         #binding.pry
         else
-            temp = Course.all.where(teacher_id: match.id)
-            puts temp[0].name
-        binding.pry
+            # temp = Course.all.where(teacher_id: match.id)
+            # puts temp[0].name
+            teacher_courses = match.courses.map do |course|
+                course.name
+            end.uniq
+
+            # puts "Courses You're Teaching"
+            # puts teacher_courses
+            course_to_change = prompt.select("Courses You're Teaching", teacher_courses) 
+
+            temp = Course.all.where(teacher_id: match.id, name: course_to_change)
+
+            #binding.pry
         # puts "Which course do you want to change?"
         # cls = gets.chomp
         #puts "What do you want to change to?"
@@ -52,7 +66,7 @@ class CommandLineInterface
         #doesn't update the current console right away
             puts "Changed"
         #binding.pry
-            sleep 2
+            sleep 1
             run
         end        
     end
@@ -151,19 +165,12 @@ class CommandLineInterface
         elsif options == "Add Course"
 
             prompt = TTY::Prompt.new
-            #get list of available courses instance
             #find specific course instance
             #update or shove into current student course array
-            available_courses
+            #available_courses
             #binding.pry
-
+            #get list of available courses instance
             course_name = prompt.select("Courses", available_courses) 
-
-
-            
-         
-            # puts "Select course name to add (Type in the course name from the list above)"
-            # course_name = gets.chomp
 
             if enrolled?(inst,course_name)
                 puts "===================================="
@@ -210,17 +217,18 @@ class CommandLineInterface
 
             #binding.pry
             #id = inst.courses.find_by(name: course_name).id
-            id = inst.courses.find_by(name: inst_course).id
+            id = inst.courses.find_by(name: course_to_delete).id
             v = inst.courses.find do |course|
                 course.id == id
                 #binding.pry
             end #destroys specific instance
             #binding.pry
             v.destroy
-
+            #binding.pry
             new_inst = Student.all.find do |student|
                 inst == student
             end #grabs the new record of instance from the database and passes it as a new argument
+            #binding.pry
             puts "Dropped!"
             sleep 1
             list_options(new_inst)

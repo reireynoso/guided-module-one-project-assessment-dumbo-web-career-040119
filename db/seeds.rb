@@ -13,6 +13,7 @@ reynoso = Teacher.create(first_name: "R", last_name: "Reynoso")
 jiraiya = Teacher.create(first_name: "Jiraiya", last_name: "Sensei")
 kakashi = Teacher.create(first_name: "Kakashi", last_name: "Hatake")
 yoda = Teacher.create(first_name: "Yoda", last_name: "Minch")
+einstein = Teacher.create(first_name: "Albert", last_name: "Einstein")
 
 
 # coding = Course.create(teacher_id: graham.id, name: "Coding")
@@ -26,3 +27,5 @@ Course.create(teacher_id: reynoso.id, name: "Mathematics")
 Course.create(teacher_id: jiraiya.id, name: "Ninja Arts")
 Course.create(teacher_id: kakashi.id, name: "Perversion Arts")
 Course.create(teacher_id: yoda.id, name: "Feeling the Force")
+Course.create(teacher_id: einstein.id, name: "Extreme Physics")
+
