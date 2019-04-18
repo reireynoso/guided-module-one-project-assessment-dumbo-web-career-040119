@@ -142,7 +142,7 @@ class CommandLineInterface
                 #puts unique
             end
             #binding.pry
-            sleep 2
+            sleep 1
             system("clear")
             list_options(inst)
         elsif options == "View Teachers"
