@@ -29,3 +29,4 @@ Course.create(teacher_id: kakashi.id, name: "Perversion Arts")
 Course.create(teacher_id: yoda.id, name: "Feeling the Force")
 Course.create(teacher_id: einstein.id, name: "Extreme Physics")
 
+
