@@ -20,6 +20,26 @@ class CommandLineInterface
         end
     end
 
+    # def run
+    #     system("clear")
+    #     puts "Welcome to Bootleg Registrar"
+    #     puts "SignUp"
+    #     puts "Login"
+    #     puts "Change Course Name"
+    #     puts "Exit"
+    #     puts "Please type what action you would like to take."
+    #     user_input = gets.chomp
+    #     if user_input == "SignUp"
+    #         sign_in
+    #     elsif user_input == "Login"
+    #         login_menu
+    #     elsif user_input == "Change Course Name"
+    #         update_course_name
+    #     else
+    #         puts "Goodbye"
+    #     end
+    # end
+
     def update_course_name
         #teacher name asks
         #matches teacher with course
@@ -30,10 +50,10 @@ class CommandLineInterface
         last_name = prompt.ask("What is your last name?")
        
         
-        #checks Teacher class for instances of teacher instance
-        # match = Teacher.all.find_by do |teacher|
-        #     teacher.first_name == first_name && teacher.last_name == last_name
-        # end
+        #checks  Teacher class for instances of teacher instance
+        #match = Teacher.all.find_by do |teacher|
+        #    teacher.first_name == first_name && teacher.last_name == last_name
+        #end
 
         match = Teacher.all.find_by(first_name: first_name , last_name: last_name)
 
@@ -48,7 +68,7 @@ class CommandLineInterface
                 course.name
             end
 
-            course_to_change = prompt.select("Courses You're Teaching", teacher_courses) 
+            course_to_change = prompt.select("Courses You're Teaching", teacher_courses.uniq) 
 
             all_course_instances = Course.all.where(teacher_id: match.id, name: course_to_change)
 
